@@ -1,0 +1,6 @@
+COLUMN TABLE "ProvisionedResources" (
+  "subscriptionId" NVARCHAR(36) NOT NULL,
+  "subaccountId" NVARCHAR(255) NOT NULL,
+  "created_at" NVARCHAR(40) NOT NULL,
+  PRIMARY KEY ("subscriptionId")
+)

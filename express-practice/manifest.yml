@@ -1,0 +1,10 @@
+applications:
+  - name: express-practice
+    path: .
+    memory: 256M
+    disk-quota: 512M
+    instances: 1
+    buildpacks:
+      - nodejs_buildpack
+    command: npm start
+    random-route: true

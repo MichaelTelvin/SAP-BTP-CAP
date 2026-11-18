@@ -1,0 +1,67 @@
+# Dependencies and package-manager caches (all application directories)
+node_modules/
+.npm/
+.pnpm-store/
+
+# Generated CAP, build, deployment, and test artifacts
+gen/
+@cds-models/
+.cds/
+target/
+_out/
+dist/
+build/
+mta_archives/
+.mta_build_tmp/
+*_mta_build_tmp/
+*.mtar
+coverage/
+.nyc_output/
+.cache/
+*.log
+logs/
+
+# Private runtime configuration, bindings, and service credentials
+.env
+.env.*
+!.env.example
+!.env.sample
+.cdsrc-private.json
+.cdsrc-private.*.json
+default-env*.json
+default-services*.json
+.npmrc
+.netrc
+.aws/
+.cf/
+.btp/
+.ssh/
+.hybrid/
+.bindings/
+secrets/
+credentials/
+service-key*
+service_key*
+*service-key*.json
+*service_key*.json
+*serviceKey*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+# Local SQLite databases, journals, WAL, and shared-memory files
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+
+# OS and local editor files
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+*.swo

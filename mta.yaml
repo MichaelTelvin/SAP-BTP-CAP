@@ -1,0 +1,119 @@
+_schema-version: 3.3.0
+ID: leverx-practice
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - cd leverx-practice && npm ci
+        - cd leverx-practice && rm -rf gen && npx cds build --production
+modules:
+  - name: leverx-practice-srv
+    type: nodejs
+    path: leverx-practice/gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: leverx-practice-db
+      - name: leverx-practice-destination
+      - name: provisioning-api
+      - name: sap-btp-practice-auth
+    properties:
+      cds_requires_ProvisioningService_credentials_destination: provisioning-service
+
+  - name: leverx-practice-db-deployer
+    type: hdb
+    path: leverx-practice/gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: leverx-practice-db
+
+  - name: express-practice-srv
+    type: nodejs
+    path: express-practice
+    parameters:
+      instances: 1
+      memory: 256M
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    properties:
+      DB_KIND: hana
+    provides:
+      - name: provisioning-api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: express-practice-db
+      - name: sap-btp-practice-auth
+
+  - name: express-practice-db-deployer
+    type: hdb
+    path: express-practice/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: express-practice-db
+    
+  
+  - name: provisioning-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: provisioning-api
+      - name: sap-btp-practice-auth
+        parameters:
+          service-key:
+            name: provisioning-xsuaa-key
+      - name: leverx-practice-destination
+        parameters:
+          content-target: true
+    build-parameters:
+      no-source: true
+    parameters:
+      content:
+        instance:
+          existing_destinations_policy: update
+          destinations:
+            - Name: provisioning-service
+              URL: ~{provisioning-api/url}
+              Authentication: OAuth2ClientCredentials
+              TokenServiceInstanceName: sap-btp-practice-auth
+              TokenServiceKeyName: provisioning-xsuaa-key
+  
+resources:
+  - name: leverx-practice-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: leverx-practice-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+  - name: express-practice-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: sap-btp-practice-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: sap-btp-practice-${org}-${space}
+        tenant-mode: dedicated    
+    

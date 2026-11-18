@@ -1,0 +1,9 @@
+{
+    "requires": {
+        "destinations": {
+            "vcap": {
+                "name": "leverx-practice-destination"
+            }
+        }
+    }
+}

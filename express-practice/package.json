@@ -1,0 +1,23 @@
+{
+  "name": "express-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/provisioning.test.js",
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@sap/hana-client": "^2.30.32",
+    "@sap/xsenv": "^6.2.2",
+    "@sap/xssec": "^4.16.0",
+    "better-sqlite3": "^13.2.0",
+    "express": "^5.3.0",
+    "pino": "^10.4.0"
+  }
+}

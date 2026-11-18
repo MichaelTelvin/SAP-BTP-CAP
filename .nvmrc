@@ -1,0 +1,2 @@
+echo "24" > .nvmrc
+git add .nvmrc

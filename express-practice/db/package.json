@@ -1,0 +1,12 @@
+{
+    "name": "express-practice-db",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node node_modules/@sap/hdi-deploy/"
+    },
+    "dependencies": {
+        "@sap/hana-client": "^2.30.32",
+        "@sap/hdi-deploy": "^5.7.0"
+    }
+}

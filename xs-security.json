@@ -1,0 +1,43 @@
+{
+  "oauth2-configuration": {
+    "redirect-uris": [
+      "http://localhost:6789/callback"
+    ]
+  },
+  "authorities": [
+    "$XSAPPNAME.ProvisioningExecute"
+  ],
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.SubscriptionViewer",
+      "description": "SubscriptionViewer"
+    },
+    {
+      "name": "$XSAPPNAME.SubscriptionManager",
+      "description": "SubscriptionManager"
+    },
+    {
+      "name": "$XSAPPNAME.ProvisioningExecute",
+      "description": "Permission to execute provisioning operations"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "SubscriptionViewer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.SubscriptionViewer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "SubscriptionManager",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.SubscriptionManager"
+      ],
+      "attribute-references": []
+    }
+  ]
+}

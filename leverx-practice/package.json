@@ -1,0 +1,95 @@
+{
+  "name": "leverx-practice",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@cap-js/hana": "^3",
+    "@sap/cds": "^10",
+    "@sap/xssec": "^4.16.0"
+  },
+  "devDependencies": {
+    "@cap-js/cds-test": "^1.0.2",
+    "@cap-js/sqlite": "^3",
+    "@sap/cds-dk": "^9.9.8"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "test": "node --test --test-concurrency=1 test/*.test.js"
+  },
+  "private": true,
+  "cds": {
+    "log": {
+      "[development]": {
+        "format": "json"
+      },
+      "[production]": {
+        "format": "json"
+      }
+    },
+    "requires": {
+      "destinations": {
+        "vcap": {
+          "name": "leverx-practice-destination"
+        }
+      },
+      "db": {
+        "[development]": {
+          "kind": "sqlite",
+          "credentials": {
+            "url": "db.sqlite"
+          }
+        },
+        "[test]": {
+          "kind": "sqlite",
+          "credentials": {
+            "url": ":memory:"
+          }
+        }
+      },
+      "auth": {
+        "[production]": {
+          "kind": "xsuaa"
+        }
+      },
+      "ProvisioningService": {
+        "kind": "rest",
+        "[development]": {
+          "credentials": {
+            "url": "http://localhost:3000"
+          }
+        },
+        "[production]": {
+          "credentials": {}
+        }
+      },
+      "[development]": {
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "viewer": {
+              "password": "viewer123",
+              "roles": [
+                "SubscriptionViewer"
+              ]
+            },
+            "manager": {
+              "password": "manager123",
+              "roles": [
+                "SubscriptionManager"
+              ]
+            },
+            "*": false
+          }
+        }
+      },
+      "queue": {
+        "maxAttempts": 3
+      },
+      "[production]": {
+        "db": {
+          "kind": "hana"
+        }
+      }
+    }
+  }
+}
