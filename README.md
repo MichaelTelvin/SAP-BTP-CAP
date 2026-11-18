@@ -1,6 +1,6 @@
 # SAP BTP Subscription Provisioning
 
-A practice project demonstrating subscription management and asynchronous provisioning using SAP CAP, Express.js, and SAP Business Technology Platform (BTP).
+A practice project demonstrating subscription management and asynchronous provisioning using SAP CAP (Cloud Application Programming Model), Express.js, and SAP Business Technology Platform (BTP).
 
 ## Architecture
 
